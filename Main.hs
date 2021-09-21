@@ -1,3 +1,4 @@
+
 --Adicionar
 push :: [a] -> a -> [a]
 push pilha x = pilha ++ [x]
@@ -11,6 +12,7 @@ fusePush(y:ys)(x:xs) = y:ys ++ x:xs
 
 --Retorna o Topo
 topo :: [a] -> a
+topo [] = error "A Pilha está Vazia!"
 topo [x] = x
 topo (x:xs) = topo xs
 
@@ -25,15 +27,14 @@ pop [] = error "A Pilha está Vazia!"
 pop [x] = []
 pop (x:xs) = x : pop xs
 
---Inverter a Lista para removemos mais de 1 elemento
 inverter :: [a] -> [a]
 inverter [] = []
 inverter (x:xs) = (inverter xs) ++ [x]
 
 --Remover mais de 1 elemento
-multPop :: [Int] -> Int -> [Int]
+multPop :: [b] -> Int -> [b]
 multPop [] _ = error "A Pilha está Vazia!"
-multPop (x:xs) a = drop a (x:xs)
+multPop pilha a = inverter(drop a (inverter pilha))
 
 
 main :: IO ()
@@ -48,9 +49,7 @@ main = do
     print p3
     let p4 = push p3 30
     print p4
-    let p5 = inverter p4
-    let p6 = multPop p5 2
-    let p7 = inverter p6
-    print p7
-    let p8 = topo p7
-    print p8
+    let p5 = multPop p4 2
+    print p5
+    let p6 = topo p5
+    print p6
